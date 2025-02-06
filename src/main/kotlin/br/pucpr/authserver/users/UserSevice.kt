@@ -1,5 +1,7 @@
 package br.pucpr.authserver.users
 
+import org.springframework.data.domain.Sort
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -9,11 +11,15 @@ class UserSevice (
     fun insert(user: User) : User{
         return userRepository.save(user);
     }
-    fun findAll() : List<User> = userRepository.findAll()
+    fun findAll(sortDir: SortDir) : List<User> =
+        when(sortDir){
+            SortDir.ASC -> userRepository.findAll(Sort.by("name"))
+            SortDir.DESC -> userRepository.findAll(Sort.by("name").descending())
+        }
 
-    fun getById(id: Long) : User? = userRepository.getById(id)
+    fun getById(id: Long) : User? = userRepository.findByIdOrNull(id)
 
-    fun delete(id: Long): User? = userRepository.delete(id)
+    fun delete(id: Long) = userRepository.deleteById(id)
 
-    fun getSorted(sortDir: String) = userRepository.findAllSorted(sortDir)
+    fun findByEmail(email: String): User? = userRepository.findByEmail(email)
 }
