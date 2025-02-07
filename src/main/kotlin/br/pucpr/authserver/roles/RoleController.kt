@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/roles")
 class RoleController(
     val roleService: RoleService
 ) {
-
-    @PostMapping()
-    fun insert(@RequestBody role: Role): ResponseEntity<Role> =
+    @PostMapping
+    fun insert(@RequestBody role: Role) =
         roleService.save(role).let {
             ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -23,7 +22,5 @@ class RoleController(
         }
 
     @GetMapping
-    fun findAll(): MutableList<Role> = roleService.findAll()
-
+    fun findAll() = roleService.findAll()
 }
-

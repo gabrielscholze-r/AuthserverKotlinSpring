@@ -1,11 +1,10 @@
 package br.pucpr.authserver.users
 
-enum class SortDir{
-    ASC,
-    DESC;
-    companion object{
-        fun findOrNull(sortDir: String):SortDir? =
-            entries.find { it.name.lowercase() == sortDir.lowercase() }
+enum class SortDir {
+    ASC, DESC;
 
+    companion object {
+        fun findOrNull(sortDir: String) =
+            entries.find { it.name == sortDir.uppercase() }
     }
 }
