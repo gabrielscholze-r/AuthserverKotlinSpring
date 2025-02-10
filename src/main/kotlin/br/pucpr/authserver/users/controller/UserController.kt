@@ -50,4 +50,13 @@ class UserController(
     fun grant(@PathVariable id: Long, @PathVariable role: String): ResponseEntity<Void> =
         if (userService.addRole(id, role)) ResponseEntity.ok().build()
         else ResponseEntity.noContent().build()
+
+    @PutMapping("/{id}/courses/{course}")
+    fun subscribe(@PathVariable id: Long, @PathVariable course: Long): ResponseEntity<Void> =
+        if (userService.subscribeToCourse(id, course)) ResponseEntity.ok().build()
+        else ResponseEntity.noContent().build()
+
+    @GetMapping("/{id}/courses")
+    fun getCourses(@PathVariable id: Long) = userService.getCourses(id)
+
 }

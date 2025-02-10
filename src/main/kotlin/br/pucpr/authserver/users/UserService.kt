@@ -1,5 +1,7 @@
 package br.pucpr.authserver.users
 
+import br.pucpr.authserver.course.Course
+import br.pucpr.authserver.course.CourseService
 import br.pucpr.authserver.exception.BadRequestException
 import br.pucpr.authserver.exception.NotFoundException
 import br.pucpr.authserver.roles.RoleRepository
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     val userRepository: UserRepository,
-    val roleRepository: RoleRepository,
+    private val courseService: CourseService,
     private val roleService: RoleService
 ) {
     fun insert(user: User)= userRepository.save(user)
@@ -40,4 +42,18 @@ class UserService(
         userRepository.save(user)
         return true
     }
+
+    fun subscribeToCourse(id:Long, course: Long): Boolean {
+        val user = findByIdOrNull(id) ?: throw NotFoundException("User ${id} not found")
+        val course = courseService.findByIdOrNull(course) ?: throw NotFoundException("Course ${course} not found")
+
+        user.courses.add(course)
+        userRepository.save(user)
+        return true
+    }
+    fun getCourses(id: Long): MutableSet<Course> {
+        val user = findByIdOrNull(id) ?: throw NotFoundException("User ${id} not found")
+        return user.courses
+    }
+
 }

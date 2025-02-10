@@ -1,9 +1,9 @@
 package br.pucpr.authserver.users
 
+import br.pucpr.authserver.course.Course
 import br.pucpr.authserver.roles.Role
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
-import org.jetbrains.annotations.NotNull
 
 @Entity
 @Table(name = "tblUsers")
@@ -26,5 +26,13 @@ class User(
         joinColumns = [JoinColumn(name = "idUser")],
         inverseJoinColumns = [JoinColumn(name = "idRole")]
     )
-    val roles: MutableSet<Role> = mutableSetOf()
+    val roles: MutableSet<Role> = mutableSetOf(),
+
+    @ManyToMany
+    @JoinTable(
+        name = "UserCourses",
+        joinColumns = [JoinColumn(name = "idCourse")],
+        inverseJoinColumns = [JoinColumn(name = "idCourse")]
+    )
+    val courses: MutableSet<Course> = mutableSetOf()
 )

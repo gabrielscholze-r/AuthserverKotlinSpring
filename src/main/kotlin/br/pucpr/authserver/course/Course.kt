@@ -5,7 +5,6 @@ import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 
 @Entity
-@Table(name = "courses")
 class Course (
     @Id @GeneratedValue
     val id: Long? = null,
