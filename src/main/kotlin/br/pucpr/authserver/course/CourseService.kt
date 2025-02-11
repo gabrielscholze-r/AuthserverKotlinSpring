@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class CourseService(
-    val repostory: CourseRepostory
+    val repository: CourseRepository
 ) {
-    fun save(course: Course): Course = repostory.save(course)
-    fun findByIdOrNull(id: Long?): Course? = repostory.findByIdOrNull(id)
-    fun delete(id: Long) = repostory.deleteById(id)
+    fun save(course: Course): Course = repository.save(course)
+    fun findByIdOrNull(id: Long?): Course? = repository.findByIdOrNull(id)
+    fun delete(id: Long) = repository.deleteById(id)
+    fun findAll(): List<Course> = repository.findAll()
+    fun deleteAll() = repository.deleteAll()
 }

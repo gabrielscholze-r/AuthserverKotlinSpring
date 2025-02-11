@@ -31,7 +31,7 @@ class User(
     @ManyToMany
     @JoinTable(
         name = "UserCourses",
-        joinColumns = [JoinColumn(name = "idCourse")],
+        joinColumns = [JoinColumn(name = "idUser")],
         inverseJoinColumns = [JoinColumn(name = "idCourse")]
     )
     val courses: MutableSet<Course> = mutableSetOf()

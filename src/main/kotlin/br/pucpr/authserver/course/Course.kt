@@ -5,21 +5,17 @@ import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 
 @Entity
+@Table(name = "tblCourse")
 class Course (
     @Id @GeneratedValue
     val id: Long? = null,
 
-    @NotBlank
+    @Column(unique = true, nullable = false)
     val name: String,
 
     @NotBlank
     val description: String,
 
-    @OneToMany
-    @JoinTable(
-        name="Lessons",
-        joinColumns = [JoinColumn(name = "idLesson")],
-        inverseJoinColumns = [JoinColumn(name = "idLesson")]
-    )
+    @OneToMany(mappedBy = "course", cascade = [(CascadeType.REMOVE)])
     val lessons: MutableSet<Lesson> = mutableSetOf()
 )

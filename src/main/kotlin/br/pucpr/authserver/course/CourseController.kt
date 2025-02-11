@@ -18,9 +18,18 @@ class CourseController(
     @PostMapping
     fun insert(@RequestBody course: Course): ResponseEntity<Course> = courseService.save(course)
         .let { ResponseEntity.status(HttpStatus.CREATED).body(it) }
+
     @GetMapping("/{id}")
     fun findByIdOrNull(@PathVariable id: Long) = courseService.findByIdOrNull(id)
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long) = courseService.delete(id)
+    fun delete(@PathVariable id: Long): ResponseEntity<Void> =
+        courseService.delete(id)
+            .let { ResponseEntity.ok().build() }
+
+    @GetMapping
+    fun findAll() = courseService.findAll()
+
+    @DeleteMapping
+    fun deleteAll() = courseService.deleteAll()
 }

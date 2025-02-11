@@ -1,6 +1,7 @@
 package br.pucpr.authserver.lesson
 
 import br.pucpr.authserver.course.Course
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 
@@ -17,11 +18,7 @@ class Lesson(
     val duration: Int,
 
     @ManyToOne
-    @JoinTable(
-        name="Course",
-        joinColumns = [JoinColumn(name = "idCourse")],
-        inverseJoinColumns = [JoinColumn(name = "idCourse")]
-    )
-    val course : Course,
+    @JsonIgnore
+    var course: Course
 
     )
