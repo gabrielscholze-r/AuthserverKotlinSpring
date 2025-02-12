@@ -1,6 +1,5 @@
 package br.pucpr.authserver.lesson
 
-import br.pucpr.authserver.course.Course
 import org.springframework.stereotype.Service
 
 

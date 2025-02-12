@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull
 
 data class AddLesson(
     @field:NotNull
-    val name: String="",
+    val name: String = "",
 
     @field:NotNull
     val duration: Int,
