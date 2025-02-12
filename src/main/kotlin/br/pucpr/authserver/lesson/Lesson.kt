@@ -17,7 +17,7 @@ class Lesson(
     @NotBlank
     val duration: Int,
 
-    @ManyToOne
+//    @ManyToOne
     @JsonIgnore
     var course: Course
 

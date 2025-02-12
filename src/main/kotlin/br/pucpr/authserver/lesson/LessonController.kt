@@ -18,8 +18,12 @@ class LessonController(
         service.delete(id)
             .let { ResponseEntity.ok().build() }
 
-    @GetMapping("/{id}")
-    fun getByCourse(@PathVariable id: Long) = service.findAllByCourse(id)
-        ?.let { ResponseEntity.ok(it) }
-        ?: ResponseEntity.notFound().build()
+    @GetMapping
+    fun getByCourse(@RequestParam dir: String = "ASC", @RequestParam course: Long): ResponseEntity<List<Lesson>> {
+        val sortDir = SortDir.findOrNull(dir)
+        if(sortDir == null)
+            return ResponseEntity.badRequest().build()
+        return service.findAllByCourse(sortDir, course)
+            .let { ResponseEntity.ok(it) }
+    }
 }

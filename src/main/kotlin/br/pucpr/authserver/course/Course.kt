@@ -16,6 +16,6 @@ class Course (
     @NotBlank
     val description: String,
 
-    @OneToMany(mappedBy = "course", cascade = [(CascadeType.REMOVE)])
+    @OneToMany(mappedBy = "course", cascade = [(CascadeType.ALL)], orphanRemoval = true)
     val lessons: MutableSet<Lesson> = mutableSetOf()
 )
