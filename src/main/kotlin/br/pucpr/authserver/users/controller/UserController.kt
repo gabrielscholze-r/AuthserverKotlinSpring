@@ -72,6 +72,8 @@ class UserController(
         if (userService.addRole(id, role)) ResponseEntity.ok().build()
         else ResponseEntity.noContent().build()
 
+    @PreAuthorize("#id == principal.id")
+    @SecurityRequirement(name = "AuthServer")
     @PutMapping("/{id}/courses/{course}")
     fun subscribe(@PathVariable id: Long, @PathVariable course: Long): ResponseEntity<Void> =
         if (userService.subscribeToCourse(id, course)) ResponseEntity.ok().build()
