@@ -66,7 +66,7 @@ class UserController(
 
 
     @PutMapping("/{id}/roles/{role}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "AuthServer")
     fun grant(@PathVariable id: Long, @PathVariable role: String): ResponseEntity<Void> =
         if (userService.addRole(id, role)) ResponseEntity.ok().build()

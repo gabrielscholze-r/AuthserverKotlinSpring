@@ -1,5 +1,5 @@
 ## Grupo:
 ### - Gabriel Scholze Rosa
 
-Video: https://www.youtube.com/watch?v=dbDMOlMmiaQ
-
+#### Parte 1 : https://www.youtube.com/watch?v=dbDMOlMmiaQ
+#### Parte 2 : https://www.youtube.com/watch?v=4ttphixbebI
