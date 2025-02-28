@@ -22,10 +22,11 @@ class Bootstrapper(
 ) : ApplicationListener<ContextRefreshedEvent> {
 
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
-        val adminRole =
-            roleRepository.findByIdOrNull("ADMIN")
-                ?: roleRepository.save(Role("ADMIN", "System Administrator"))
-                    .also { roleRepository.save(Role("USER", "Premium User")) }
+        val adminRole = roleRepository.findByIdOrNull("ADMIN")
+            ?: roleRepository.save(Role("ADMIN", "System Administrator"))
+
+        val userRole = roleRepository.findByIdOrNull("USER")
+            ?: roleRepository.save(Role("USER", "Premium User"))
 
         if (userRepository.findByRole("ADMIN").isEmpty()) {
             val admin = User(
@@ -35,6 +36,16 @@ class Bootstrapper(
             )
             admin.roles.add(adminRole)
             userRepository.save(admin)
+        }
+
+        if (userRepository.findByRole("USER").isEmpty()) {
+            val user = User(
+                email = "user@authserver.com",
+                password = "user",
+                name = "Regular User"
+            )
+            user.roles.add(userRole)
+            userRepository.save(user)
         }
 
         val courses = listOf(
@@ -57,4 +68,3 @@ class Bootstrapper(
         }
     }
 }
-

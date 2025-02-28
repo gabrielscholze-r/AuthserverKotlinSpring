@@ -7,6 +7,7 @@ import io.jsonwebtoken.jackson.io.JacksonSerializer
 import io.jsonwebtoken.security.Keys
 import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -18,16 +19,28 @@ import java.util.*
 
 @Component
 class JWT {
+    @Value("\${jwt.secret}")
+    private lateinit var secret: String
+
+    @Value("\${jwt.expiration-hours}")
+    private var expireHours: Long = 48
+
+    @Value("\${jwt.admin-expiration-hours}")
+    private var adminExpireHours: Long = 1
+
+    @Value("\${jwt.issuer}")
+    private lateinit var issuer: String
+
     fun createToken(user: User): String =
         UserToken(user).let {
             Jwts.builder().json(JacksonSerializer())
-                .signWith(Keys.hmacShaKeyFor(SECRET.toByteArray()))
+                .signWith(Keys.hmacShaKeyFor(secret.toByteArray()))
                 .subject(user.id.toString())
                 .issuedAt(utcNow().toDate())
                 .expiration(utcNow().plusHours(
-                    if (it.isAdmin) ADMIN_EXPIRE_HOURS else EXPIRE_HOURS
+                    if (it.isAdmin) adminExpireHours else expireHours
                 ).toDate())
-                .issuer(ISSUER)
+                .issuer(issuer)
                 .claim(USER_FIELD, it)
                 .compact()
         }
@@ -40,11 +53,11 @@ class JWT {
             if (token.isEmpty()) return null
 
             val claims = Jwts.parser().json(JacksonDeserializer(mapOf(USER_FIELD to UserToken::class.java)))
-                .verifyWith(Keys.hmacShaKeyFor(SECRET.toByteArray()))
+                .verifyWith(Keys.hmacShaKeyFor(secret.toByteArray()))
                 .build()
                 .parseSignedClaims(token).payload
 
-            if (claims.issuer != ISSUER) return null
+            if (claims.issuer != issuer) return null
             return claims.get("user", UserToken::class.java).toAuthentication()
 
         } catch (e: Throwable) {
@@ -52,13 +65,9 @@ class JWT {
             return null
         }
     }
+
     companion object {
         val log = LoggerFactory.getLogger(JWT::class.java)
-
-        const val SECRET="aef154f729347b5894f64477dd62ddc2d72d1e28"
-        const val EXPIRE_HOURS = 48L
-        const val ADMIN_EXPIRE_HOURS = 1L
-        const val ISSUER = "AuthServer"
         const val USER_FIELD = "user"
 
         private fun utcNow() = ZonedDateTime.now(ZoneOffset.UTC)
