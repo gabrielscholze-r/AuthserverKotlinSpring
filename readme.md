@@ -28,7 +28,7 @@ Sistema modular para instituições de ensino, oferecendo:
 ----
 
 ## ✨ Funcionalidades Principais
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 16px;"> <div style="background: #1f1f1f; padding: 16px; border-radius: 8px;"> <h4>🎯 Gestão Acadêmica</h4> <ul> <li>Cursos e aulas hierárquicos</li> <li>Filtros dinâmicos (nome, status)</li> <li>Relacionamentos flexíveis</li> </ul> </div> <div style="background: #1f1f1f; padding: 16px; border-radius: 8px;"> <h4>⚡ Performance</h4> <ul> <li>Cache de consultas</li> <li>Paginacão automática</li> <li>Validação assíncrona</li> </ul> </div> </div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 16px;"> <div style="background: #1f1f1f; padding: 16px; border-radius: 8px;"> <h4>🎯 Gestão Acadêmica</h4> <ul> <li>Cursos e aulas hierárquicos</li> <li>Filtros dinâmicos (nome, status)</li> <li>Relacionamentos flexíveis</li> </ul> </div>
 
 ---
 🔐 Segurança
